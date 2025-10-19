@@ -1,0 +1,43 @@
+@startuml
+' Настройки
+skinparam rectangle {
+  BackgroundColor #F3F3F3
+  BorderColor black
+  RoundCorner 15
+}
+skinparam note {
+  BackgroundColor #FFFFCC
+  BorderColor black
+}
+
+' Внешние сущности
+actor "Пользователь" as User
+actor "Администратор" as Admin
+
+' Процессы
+rectangle "1.0 Управление каталогом\n(просмотр, фильтр)" as P1
+rectangle "2.0 Авторизация" as P2
+rectangle "3.0 Оформление заказа" as P3
+
+' Хранилища данных
+database "D1: Каталог игр" as D1
+database "D2: Пользователи" as D2
+database "D3: Заказы" as D3
+
+' Потоки данных
+User --> P1 : Запрос каталога / фильтр
+P1 --> User : Список игр
+
+User --> P2 : Логин, пароль
+P2 --> User : Результат авторизации
+
+User --> P3 : Данные заказа
+P3 --> User : Подтверждение заказа
+
+Admin --> P1 : Команды изменения каталога
+P1 --> Admin : Подтверждение изменений
+
+P1 --> D1 : Чтение / запись
+P2 --> D2 : Проверка данных
+P3 --> D3 : Сохранение заказа
+@enduml
