@@ -1,0 +1,30 @@
+@startuml
+left to right direction
+actor Guest as G
+actor User as U
+actor Admin as A
+
+package "Game Shop System" {
+  usecase "View Catalog" as UC1
+  usecase "Filter by Genre" as UC2
+  usecase "Login" as UC3
+  usecase "Place Order" as UC4
+  usecase "Register" as UC5
+  usecase "Manage Catalog" as UC6
+}
+
+G --> UC1
+G --> UC2
+G --> UC5
+
+U --> UC1
+U --> UC2
+U --> UC3
+U --> UC4
+
+A --> UC6
+
+' отношения
+UC4 .> UC3 : <<include>>  ' оформление заказа включает авторизацию (если не авторизован)
+UC1 .> UC2 : <<include>>  ' просмотр каталога может включать фильтрацию
+@enduml
